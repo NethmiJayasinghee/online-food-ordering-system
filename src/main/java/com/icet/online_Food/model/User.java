@@ -1,6 +1,7 @@
 package com.icet.online_Food.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.icet.online_Food.dto.RestaurantDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,20 +23,9 @@ public class User {
 
     private String fullName;
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY )
     private String password;
     private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
-
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public USER_ROLE getRole() {
-//        return role;
-//    }
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     @JsonIgnore
