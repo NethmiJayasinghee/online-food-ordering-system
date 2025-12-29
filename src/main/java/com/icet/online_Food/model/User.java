@@ -25,17 +25,17 @@ public class User {
     private String password;
     private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public USER_ROLE getRole() {
-        return role;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public USER_ROLE getRole() {
+//        return role;
+//    }
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     @JsonIgnore
