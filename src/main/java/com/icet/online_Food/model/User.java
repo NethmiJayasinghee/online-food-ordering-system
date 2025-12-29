@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +23,19 @@ public class User {
     private String fullName;
     private String email;
     private String password;
-    private USER_ROLE role;
+    private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public USER_ROLE getRole() {
+        return role;
+    }
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     @JsonIgnore
