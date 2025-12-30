@@ -1,0 +1,68 @@
+package com.icet.online_Food.controller;
+
+import com.icet.online_Food.model.Restaurant;
+import com.icet.online_Food.model.User;
+import com.icet.online_Food.request.CreateRestaurantRequest;
+import com.icet.online_Food.response.MessageResponse;
+import com.icet.online_Food.service.RestaurantService;
+import com.icet.online_Food.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
+
+@RestController
+@RequestMapping("/api/admin/restaurants")
+public class AdminRestaurantController {
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping()
+    public ResponseEntity<Restaurant>createRestaurant(
+            @RequestBody CreateRestaurantRequest req,
+            @RequestHeader("Authorization")String jwt
+            )throws  Exception{
+        User user=userService.findUserBYJwtToken(jwt);
+
+
+        Restaurant restaurant=restaurantService.createRestauarant(req,user);
+        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurant>updateRestaurant(
+            @RequestBody CreateRestaurantRequest req,
+            @RequestHeader("Authorization")String jwt,
+            @PathVariable Long id
+    )throws  Exception{
+        User user=userService.findUserBYJwtToken(jwt);
+
+
+        Restaurant restaurant=restaurantService.createRestauarant(req,user);
+        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MessageResponse>deleteRestaurant(
+            @RequestBody CreateRestaurantRequest req,
+            @RequestHeader("Authorization")String jwt,
+            @PathVariable Long id
+    )throws  Exception{
+        User user=userService.findUserBYJwtToken(jwt);
+
+
+        restaurantService.createRestauarant(req,user);
+
+        MessageResponse res=new MessageResponse();
+        res.setMessage("restaurant deleted successfully");
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+    }
+}
+
+
