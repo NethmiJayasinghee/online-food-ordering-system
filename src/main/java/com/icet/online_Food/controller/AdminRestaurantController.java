@@ -11,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
-
 @RestController
 @RequestMapping("/api/admin/restaurants")
 public class AdminRestaurantController {
@@ -29,8 +26,6 @@ public class AdminRestaurantController {
             @RequestHeader("Authorization")String jwt
             )throws  Exception{
         User user=userService.findUserBYJwtToken(jwt);
-
-
         Restaurant restaurant=restaurantService.createRestauarant(req,user);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
@@ -44,8 +39,8 @@ public class AdminRestaurantController {
         User user=userService.findUserBYJwtToken(jwt);
 
 
-        Restaurant restaurant=restaurantService.createRestauarant(req,user);
-        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+        Restaurant restaurant=restaurantService.updateRestaurant(id,req);
+        return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
