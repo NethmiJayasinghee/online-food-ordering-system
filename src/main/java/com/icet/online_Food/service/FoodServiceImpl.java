@@ -8,6 +8,7 @@ import com.icet.online_Food.request.CreateFoodRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodServiceImpl implements  FoodService{
@@ -85,16 +86,24 @@ public class FoodServiceImpl implements  FoodService{
 
     @Override
     public List<Food> searchFood(String keyword) {
-        return List.of();
+        return foodRepository.searchFood(keyword) ;
     }
 
     @Override
     public Food findFoodById(Long foodId) throws Exception {
-        return null;
+        Optional<Food> optionalFood=foodRepository.findById(foodId);
+
+        if(optionalFood.isEmpty()){
+            throw new Exception("Food not exit...");
+        }
+        return optionalFood.get();
     }
 
     @Override
     public Food updateAvailabilityStatus(Long foodId) throws Exception {
-        return null;
+        Food food=findFoodById(foodId);
+        food.setAvailable(!food.isAvailable());
+
+        return foodRepository.save(food);
     }
 }
